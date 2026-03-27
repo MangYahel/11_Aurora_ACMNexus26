@@ -1,223 +1,64 @@
-# 🚀 Welcome to NEXUS
+# GhostTrace X
 
-### Conducted by | CLIQUE x ACM MITS |
+**Continuous Behavioral Identity Threat Detection System**
 
-### 📅 March 27 & 28
+![GhostTrace X](https://img.shields.io/badge/Status-Hackathon_Demo_Ready-success?style=for-the-badge&logo=shield) 
+![React](https://img.shields.io/badge/Frontend-React_&_Tailwind-61DAFB?style=for-the-badge)
+![Python](https://img.shields.io/badge/Backend-Python_Flask-3776AB?style=for-the-badge)
 
-### 📍 Muthoot Institute of Technology and Science
+GhostTrace X is a continuous behavioral verification tool that dynamically learns legitimate user behaviors in real-time, and constantly monitors live session activities to catch Identity Drift.
 
-<p align="center">
-  <img src="template_acm.png" width="500"/>
-  <img src="template_clique.png" width="250"/>
-</p>
+## 💻 The 3-Laptop Architecture (Demo Structure)
+To perfectly simulate an enterprise environment during your pitch, GhostTrace X is structured around three distinct endpoint modes selected from the main dashboard:
+1. **Admin SOC Laptop:** The global Security Operations Center. It doesn't track behavior; instead, it polls a live feed of anomalies generated securely by the network's endpoints.
+2. **Employee Laptop 1 (Rahul):** An endpoint simulation running our AI agent.
+3. **Employee Laptop 2 (Aisha):** An endpoint simulation running our AI agent.
 
----
-
-### 📖 Description
-
-A **16-hour hackathon** across various domains where innovation meets execution. Build, collaborate, and push your limits.
-
----
-
-## 🧠 Project Details (To be filled by participants)
-
-```md
-### 🏷️ Project Name:
-<Your Project Name>
-
-### 🎯 Chosen Domain:
-<One from the given domains>
-
-### ❗ Problem Statement:
-<What problem are you solving?>
-
-### 💡 Solution:
-<How does your project solve the problem?>
-```
+### The Real-Time Learning Pipeline:
+Instead of relying on hardcoded rules, Employee laptops start with almost **zero training**.
+- Clicking **Submit Routine Work (Train AI)** passes normal behaviors (e.g., logging in at 9 AM, accessing Finance) into the database. The AI recalculates moving averages and updates its trusted arrays live.
+- Clicking **Execute Live Threat Input** pushes an anomaly (e.g., logging in at 2 AM from an Unknown IP). The AI verifies it against the dynamically learned baseline, generates a threat alert, and pushes it to the Admin SOC feed.
 
 ---
 
-## 🎯 Hackathon Domains
+## 🚀 How to Run Locally
 
-Participants must choose **one** of the following domains:
+### 1) Backend Setup (Flask Application)
+1. Open a terminal and navigate to the `backend` directory:
+   ```bash
+   cd backend
+   ```
+2. Install Python dependencies:
+   ```bash
+   pip install -r requirements.txt
+   # OR on Windows: py -m pip install -r requirements.txt
+   ```
+3. Start the backend server:
+   ```bash
+   python app.py
+   # OR on Windows: py app.py
+   ```
+   *The server will start on `http://127.0.0.1:5000`*
 
-1️⃣ Digital Asset Protection
-2️⃣ Smart Supply Chains
-3️⃣ Digital Health & Predictive Care
-4️⃣ Climate Intelligence
-5️⃣ Cybersecurity & Threat Intelligence
-
----
-
-## ⚙️ Hackathon Workflow & Rules
-
-To ensure fairness and transparency, we have designed a structured development and tracking system.
-
----
-
-### 🔗 GitHub Template
-
-👉 **Template Repo:** `{link}`
-
-* All teams must **fork this repository**
-* Fork name must follow:
-
-```
-<TeamId>_<TeamName>_ACMNexus26
-```
-
-* Example:
-
-```
-12_CodeWarriors_ACMNexus26
-```
-
-* You may rename the repository **after the event ends**
+### 2) Frontend Setup (React/Vite Application)
+1. Open a new terminal and navigate to the `frontend` directory:
+   ```bash
+   cd frontend
+   ```
+2. Install Node dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the Vite development server:
+   ```bash
+   npm run dev
+   ```
+   *Click the local output link (usually `http://localhost:5173`) to view the application in your browser.*
 
 ---
 
-
----
-
-## 👥 Participation Rules
-
-* Team Size: **2–4 members**
-* **Pre-created projects are strictly not allowed**
-* All work must be done **during the hackathon timeframe**
-* Only registered team members must participate
-* Do **not attack or interfere** with college infrastructure/network
-* Follow all instructions from the organizing team
-
----
-
-## 📁 Repository Structure
-
-
-Repository must not be private. The template Repository includes:
-
-```
-AGENTS.md
-README.md
-CHANGELOG.md
-/progress/
-```
-
----
-
-## ⏱️ Hourly Progress Requirements
-
-Every hour, teams must:
-
-* Make **at least one commit**
-* Add **at least one progress update** inside `/progress/`
-
-Progress can include:
-
-* Screenshots
-* Screen recordings
-* Dataset snapshots
-* Any meaningful proof of work
-
-### 📂 Progress Format
-
-```
-/progress
-1.png
-2.png
-3.png
-```
-
-* Files must be **numbered sequentially**
-* Each file should reflect **actual development progress**
-
----
-
-## 📝 Changelog Rules (VERY IMPORTANT)
-
-Every commit must be reflected in `CHANGELOG.md`.
-
-You can:
-
-* Update it per commit, OR
-* Update it periodically (but must be complete at the end)
-
----
-
-### 📌 Changelog Format
-
-```md
-## HH:MM
-
-### Features Added
-- Added login functionality
-- Implemented API integration
-
-### Files Modified
-- auth.js
-- login.jsx
-
-### Issues Faced
-- Firebase auth errors
-- API timeout issues
-```
-
----
-
-💡 Tip:
-Instructions are already included in `AGENTS.md`.
-You can simply prompt it to **"CREATE CHANGELOG"** to follow the format.
-
----
-
-## 📖 Documentation
-
-We have provided:
-
-* Examples
-* Guidelines
-
-Inside:
-
-* `AGENTS.md`
-* `README.md`
-
-Please follow them strictly.
-
----
-
-## 🔍 Monitoring & Verification
-
-* Random checks will be conducted during the hackathon
-* Organizers may:
-
-  * Inspect commit history
-  * Review changelog consistency
-  * Verify progress evidence
-
----
-
-## 👨‍💻 Team Collaboration Rules
-
-* All members must be added as **collaborators**
-* By the end of the hackathon:
-
-  * **Each member must have at least one commit**
-
----
-
-## ⚠️ Disqualification Criteria
-
-* Use of **pre-built / pre-developed projects**
-* Fake or manipulated commit history
-* Missing hourly commits or progress updates
-* Incomplete or inconsistent changelog
-
----
-
-## 🏁 Final Note
-
-Focus on building, learning, and enjoying the experience.
-
----
-
-🔥 **Build. Break. Innovate. See you at NEXUS.**
+## 🛡️ Hackathon Pitch Walkthrough Guide
+1. **Start on Employee 1:** Select "Rahul - Employee Role". Note that the AI says `Insufficient Data`.
+2. **Train the AI Live:** Hit "Submit Routine Work" 3-4 times. Watch the *AI Confidence Level* tick up as it learns his trusted location (Mumbai Office) and standard file downloads.
+3. **Inject the Attack:** Change the Login Hour to "3" and Location to "Russia VPN". Hit **Execute Live Threat**. Watch the Critical Matrix trigger.
+4. **The Big Reveal:** Switch the top dropdown to **Admin SOC Role**. The judges will see the dashboard swap entirely to a Global SOC view, where a Critical Identity Drift Alert has just flashed onto the screen citing Employee 1's exact host machine!
