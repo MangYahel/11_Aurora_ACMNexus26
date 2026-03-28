@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-cyber-900 text-gray-200;
+  }
+}
+
+@layer components {
+  .cyber-panel {
+    @apply bg-cyber-800/80 border border-cyber-700 rounded-xl backdrop-blur-sm shadow-xl overflow-hidden relative;
+  }
+  
+  .cyber-panel::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-cyber-700 to-transparent opacity-50;
+  }
+
+  .cyber-input {
+    @apply w-full bg-cyber-900/50 border border-cyber-700 rounded-lg px-4 py-2 text-gray-200 focus:outline-none focus:border-cyber-neon focus:ring-1 focus:ring-cyber-neon transition-colors;
+  }
+
+  .cyber-button {
+    @apply px-4 py-2 bg-cyber-neon/10 text-cyber-neon border border-cyber-neon/30 rounded-lg hover:bg-cyber-neon/20 transition-all font-medium flex items-center justify-center gap-2 relative overflow-hidden;
+  }
+  
+  .cyber-button::after {
+    content: "";
+    @apply absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 transition-opacity duration-300;
+    transform: translateX(-100%);
+  }
+
+  .cyber-button:hover::after {
+    @apply opacity-20;
+    transform: translateX(100%);
+    transition: all 0.5s ease-in-out;
+  }
+
+  .cyber-badge {
+    @apply px-2 py-1 text-xs font-semibold rounded-md flex items-center gap-1 w-max;
+  }
+
+  .cyber-badge-low {
+    @apply bg-cyber-success/10 text-cyber-success border border-cyber-success/30;
+  }
+  .cyber-badge-medium {
+    @apply bg-cyber-warning/10 text-cyber-warning border border-cyber-warning/30;
+  }
+  .cyber-badge-high {
+    @apply bg-orange-500/10 text-orange-500 border border-orange-500/30;
+  }
+  .cyber-badge-critical {
+    @apply bg-cyber-danger/10 text-cyber-danger border border-cyber-danger/30;
+  }
+}
+
+/* Custom Scrollbar for cyber feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-cyber-900;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-cyber-700 rounded-full border-2 border-solid border-cyber-900;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-cyber-600;
+}

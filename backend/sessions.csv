@@ -1,0 +1,176 @@
+import datetime
+
+def validate_ticket(ticket, session):
+    risk_score = 0
+    anomalies = []
+
+    # ----------------------------
+    # SAFE FIELD EXTRACTION
+    # Accept both frontend + backend field names
+    # ----------------------------
+    ticket_department = str(ticket.get("department", "")).strip().lower()
+    session_department = str(
+        session.get("department", "")
+    ).strip().lower()
+
+    allowed_folders = [
+        f.strip().lower()
+        for f in str(ticket.get("allowed_folders", "")).split(",")
+        if f.strip()
+    ]
+    accessed_folder = str(
+        session.get("accessed_folder") or session.get("folder") or ""
+    ).strip().lower()
+
+    allowed_actions = [
+        a.strip().lower()
+        for a in str(ticket.get("allowed_actions", "")).split(",")
+        if a.strip()
+    ]
+    action_taken = str(
+        session.get("action_taken") or session.get("action") or ""
+    ).strip().lower()
+
+    allowed_apps = [
+        a.strip().lower()
+        for a in str(ticket.get("allowed_apps", "chrome, excel")).split(",")
+        if a.strip()
+    ]
+    session_app = str(
+        session.get("active_app") or session.get("app") or ""
+    ).strip().lower()
+
+    allowed_websites = [
+        a.strip().lower()
+        for a in str(ticket.get("allowed_websites", "")).split(",")
+        if a.strip()
+    ]
+    session_web = str(
+        session.get("active_website") or session.get("website") or ""
+    ).strip().lower()
+
+    try:
+        max_files = int(ticket.get("max_files", 0) or 0)
+    except:
+        max_files = 0
+
+    try:
+        files_accessed = int(session.get("files_accessed") or session.get("files") or 0)
+    except:
+        files_accessed = 0
+
+    try:
+        max_download_mb = int(ticket.get("max_download_mb", 0) or 0)
+    except:
+        max_download_mb = 0
+
+    try:
+        download_mb = int(session.get("download_mb") or session.get("download") or 0)
+    except:
+        download_mb = 0
+
+    usb_inserted = str(session.get("usb_inserted", "")).strip().lower() == "true" or session.get("usb_inserted") is True
+
+    # ----------------------------
+    # VALIDATION RULES
+    # ----------------------------
+
+    # 1. Department mismatch
+    if session_department and ticket_department and session_department != ticket_department:
+        risk_score += 40
+        anomalies.append(
+            f"Department scope violation. Authorized area: '{ticket.get('department')}', Accessed: '{session.get('department')}'"
+        )
+
+    # 2. Folder mismatch
+    if accessed_folder and allowed_folders and accessed_folder not in allowed_folders:
+        risk_score += 30
+        anomalies.append(f"Unauthorized directory accessed: '{accessed_folder}'")
+
+    # 3. Action mismatch
+    if action_taken and allowed_actions and action_taken not in allowed_actions:
+        risk_score += 40
+        anomalies.append(f"Unauthorized action escalated: attempted '{action_taken}'")
+
+    # 4. App mismatch
+    if session_app and allowed_apps and session_app not in allowed_apps:
+        risk_score += 35
+        anomalies.append(f"Unauthorized Software Execution: {session_app}")
+
+    # 5. Website mismatch
+    if session_web and allowed_websites and session_web not in allowed_websites:
+        risk_score += 20
+        anomalies.append(f"Policy Violation: Non-compliant web traffic ({session_web})")
+
+    # 6. USB inserted
+    if usb_inserted:
+        risk_score += 80
+        anomalies.append("CRITICAL: Unauthorized USB Mass Storage Device mounted!")
+
+    # 7. File count ONLY if ABOVE limit
+    if max_files > 0 and files_accessed > max_files:
+        if files_accessed > max_files * 1.5:
+            risk_score += 30
+            anomalies.append(f"Severe file boundary deviation: {files_accessed} files (Limit: {max_files})")
+        else:
+            risk_score += 15
+            anomalies.append(f"Minor file boundary deviation: {files_accessed} files (Limit: {max_files})")
+
+    # 8. Download ONLY if ABOVE limit
+    if max_download_mb > 0 and download_mb > max_download_mb:
+        if download_mb > max_download_mb * 1.5:
+            risk_score += 35
+            anomalies.append(f"Severe download deviation: {download_mb}MB (Limit: {max_download_mb}MB)")
+        else:
+            risk_score += 20
+            anomalies.append(f"Download exceeded approved size: {download_mb}MB/{max_download_mb}MB")
+
+    # ----------------------------
+    # FINAL RESULT
+    # ----------------------------
+    risk_score = min(100, risk_score)
+    violation_detected = len(anomalies) > 0
+
+    if risk_score == 0:
+        severity = "NORMAL"
+        compliance_status = "ADHERENCE"
+        violation_type = "None"
+        user_notification = "System Stable. Operating within assigned ticket parameters."
+        admin_notification = "None"
+        response_actions = ["Log active footprint"]
+    elif risk_score <= 35:
+        severity = "MINOR"
+        compliance_status = "VIOLATION"
+        violation_type = "Minor Boundary Deviation"
+        user_notification = "Warning: You are accessing off-ticket software or exceeding file limits."
+        admin_notification = "Minor Deviation Logged - Warning Issued"
+        response_actions = ["Warning Issued", "Alert Admin"]
+    elif risk_score <= 70:
+        severity = "MEDIUM"
+        compliance_status = "VIOLATION"
+        violation_type = "Medium Policy Deviation"
+        user_notification = "Alert: Repeated misuse or blocked software detected. Activity flagged."
+        admin_notification = "Medium Deviation - Risk Level Increased"
+        response_actions = ["Stronger Alerts", "Increase Logging Tracking"]
+    else:
+        severity = "CRITICAL"
+        compliance_status = "VIOLATION"
+        violation_type = "Severe Task Misuse / Exfiltration Attempt"
+        user_notification = "CRITICAL: Access terminated due to severe policy violation. Workstation freezing."
+        admin_notification = "CRITICAL INCIDENT: Unauthorized Action - Target Locked"
+        response_actions = ["Immediate Lockdown", "Admin Notification", "Disable Workflow"]
+
+    return {
+        "ticket_id": ticket.get("id"),
+        "user_name": ticket.get("user_name"),
+        "compliance_status": compliance_status,
+        "violation_detected": violation_detected,
+        "violation_type": violation_type,
+        "severity": severity,
+        "risk_score": risk_score,
+        "explanation": anomalies,
+        "user_notification": user_notification,
+        "admin_notification": admin_notification,
+        "response_actions": response_actions,
+        "timestamp": datetime.datetime.now().strftime("%I:%M %p")
+    }

@@ -1,0 +1,71 @@
+[
+    {
+        "id": "admin_laptop",
+        "name": "SOC Admin Workspace",
+        "department": "Security Operations",
+        "role": "admin",
+        "baseline": null
+    },
+    {
+        "id": "emp1_laptop",
+        "name": "Rahul (Finance Dept)",
+        "department": "Finance",
+        "role": "employee",
+        "baseline": {
+            "session_count": 8,
+            "login_hours": [
+                9,
+                9,
+                10,
+                9,
+                8,
+                1,
+                1,
+                1
+            ],
+            "trusted_locations": [
+                "Mumbai Office",
+                "Mumbai Office",
+                "Mumbai Office",
+                "Home Network",
+                "Mumbai Office",
+                "Local Network Proxy / Offline"
+            ],
+            "trusted_devices": [
+                "Finance_Win_11",
+                "Windows Client [Hooked]"
+            ],
+            "trusted_departments": [
+                "Finance"
+            ],
+            "files_accessed_avg": 12.0,
+            "download_size_mb_avg": 45.0
+        }
+    },
+    {
+        "id": "emp2_laptop",
+        "name": "Aisha (Engineering)",
+        "department": "Engineering",
+        "role": "employee",
+        "baseline": {
+            "session_count": 4,
+            "login_hours": [
+                1,
+                1,
+                1,
+                1
+            ],
+            "trusted_locations": [
+                "Local Network Proxy / Offline"
+            ],
+            "trusted_devices": [
+                "Windows Client [Hooked]"
+            ],
+            "trusted_departments": [
+                "Engineering"
+            ],
+            "files_accessed_avg": 12.0,
+            "download_size_mb_avg": 45.0
+        }
+    }
+]

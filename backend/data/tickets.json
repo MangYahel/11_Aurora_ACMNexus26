@@ -1,0 +1,16 @@
+[
+    {
+        "id": "GTX-101",
+        "user_name": "Irene",
+        "department": "Finance",
+        "task_description": "Audit q1 reports",
+        "allowed_folders": "/finance/reports/q1",
+        "allowed_actions": "read",
+        "allowed_apps": "chrome, excel",
+        "allowed_websites": "docs.google.com",
+        "max_files": 10,
+        "max_download_mb": 50,
+        "time_window": "9 AM - 6 PM",
+        "status": "ACTIVE"
+    }
+]
